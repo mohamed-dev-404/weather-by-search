@@ -21,12 +21,12 @@ class NoWeatherBody extends StatelessWidget {
             animatedTexts: [
               TypewriterAnimatedText(
                 'start searching now 🔍',
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   fontSize: 25,
                   color: Colors.blueGrey,
                   fontWeight: FontWeight.bold,
                 ),
-                speed: Duration(milliseconds: 100), // typing speed
+                speed: const Duration(milliseconds: 100), // typing speed
               ),
             ],
             pause: const Duration(milliseconds: 1000),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_by_search/widgets/no_weather_body.dart';
+import 'package:weather_by_search/widgets/weather_info_body.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -10,13 +10,16 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 70,
         titleSpacing: 35,
-        title: Text(
+        title: const Text(
           'Weather by search App',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         backgroundColor: Colors.blueAccent,
       ),
-      body: NoWeatherBody(),
+      body: const WeatherInfoBody(),
     );
   }
 }

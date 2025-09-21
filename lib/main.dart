@@ -8,10 +8,8 @@ void main() {
 class WeatherBySearch extends StatelessWidget {
   const WeatherBySearch({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: const HomeView());
+    return const MaterialApp(home: HomeView());
   }
 }
-
