@@ -13,24 +13,19 @@ class WeatherService {
         '$_baseUrl/forecast.json?key=$_apiKey&q=$cityName&days=1',
       );
       Map<String, dynamic> jason = response.data;
-      Map<String, dynamic> locationJason = jason['location'];
-      Map<String, dynamic> currentJason = jason['current'];
-      Map<String, dynamic> forecastJason = jason['forecast'];
 
       return WeatherModel.fromJason(
-        locationJson: locationJason,
-        currentJson: currentJason,
-        forecastJson: forecastJason,
+        locationJson: jason['location'],
+        currentJson: jason['current'],
+        forecastJson: jason['forecast'],
       );
+    } on DioException catch (e) {
+      final errorMessage =
+          e.response?.data['error']['message'] ??
+          'Something went wrong, please try again later.';
+      throw Exception(errorMessage);
     } catch (e) {
-      return WeatherModel(
-        cityName: 'Error',
-        lastUpdatedTime: 'Error',
-        weatherState: 'Error',
-        currentTemperature: 0.0,
-        minTemperature: 0.0,
-        maxTemperature: 0.0,
-      );
+      throw Exception('Something went wrong, please try again later.');
     }
   } // getCurrentWeatherByCity
 } // WeatherService
