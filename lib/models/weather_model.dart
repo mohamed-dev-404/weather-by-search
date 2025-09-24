@@ -9,17 +9,17 @@ class WeatherModel {
   WeatherModel({
     required this.cityName,
     required this.lastUpdatedTime, // in the format of "2025-09-23 18:45"
-    required this.weatherState,  // e.g., "Sunny", "Cloudy"
+    required this.weatherState, // e.g., "Sunny", "Cloudy"
     required this.currentTemperature, // in Celsius
     required this.minTemperature, //  in Celsius
     required this.maxTemperature, //  in Celsius
   });
 
-  factory WeatherModel.fromJason(
-    Map<String, dynamic> locationJson,
-    Map<String, dynamic> currentJson,
-    Map<String, dynamic> forecastJson,
-  ) {
+  factory WeatherModel.fromJason({
+    required Map<String, dynamic> locationJson,
+    required Map<String, dynamic> currentJson,
+    required Map<String, dynamic> forecastJson,
+  }) {
     return WeatherModel(
       cityName: locationJson['name'],
       lastUpdatedTime: currentJson['last_updated'],
