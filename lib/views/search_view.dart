@@ -1,9 +1,6 @@
-// ignore_for_file: use_build_context_synchronously
-// import 'dart:developer';
-// import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-// import 'package:weather_by_search/models/weather_model.dart';
-// import 'package:weather_by_search/services/weather_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_by_search/cubits/get_weather_cubit/get_weather_cubit.dart';
 
 class SearchView extends StatelessWidget {
   const SearchView({super.key});
@@ -23,29 +20,21 @@ class SearchView extends StatelessWidget {
           ),
         ),
       ),
-
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Center(
           child: TextField(
-            onSubmitted: (value) async {
-              // WeatherModel weatherModel = await WeatherService(
-              //   dio: Dio(),
-              // ).getCurrentWeatherByCity(value);
-              // log(weatherModel.cityName); // for debug
-
-              // Navigator.pop(
-              //   context,
-              //   weatherModel,
-              // ); // send data back to home view
+            onSubmitted: (value) {
+              GetWeatherCubit getWeatherCubit =
+                  BlocProvider.of<GetWeatherCubit>(context);
+              getWeatherCubit.getCurrentWeather(cityName: value);
+              Navigator.pop(context);
             },
             onChanged: (value) {},
             decoration: const InputDecoration(
-              contentPadding: EdgeInsets.symmetric(
-                vertical: 24.0,
-              ),
+              contentPadding: EdgeInsets.symmetric(vertical: 24.0),
               hint: Text('Enter city name'),
-              label: Text('Search'),
+              label: Text('Search 🔍'),
               prefixIcon: Icon(Icons.search_rounded),
               border: OutlineInputBorder(),
             ),
