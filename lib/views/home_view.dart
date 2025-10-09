@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_by_search/cubits/get_weather_cubit/get_weather_cubit.dart';
+import 'package:weather_by_search/cubits/get_weather_cubit/get_weather_states.dart';
 import 'package:weather_by_search/models/weather_model.dart';
 import 'package:weather_by_search/views/search_view.dart';
 import 'package:weather_by_search/widgets/no_weather_body.dart';
@@ -29,21 +32,15 @@ class _HomeViewState extends State<HomeView> {
         backgroundColor: Colors.blueAccent,
         actions: [
           IconButton(
-            onPressed: () async {
-              final data = await Navigator.of(context).push(
+            onPressed: () {
+              Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (contex) {
                     return const SearchView();
                   },
                 ),
               );
-              if (data != null && data is WeatherModel) {
-                setState(() {
-                  weatherModel = data;
-                });
-              }
             },
-
             icon: const Icon(
               Icons.search_rounded,
               color: Colors.white,
@@ -53,11 +50,17 @@ class _HomeViewState extends State<HomeView> {
           const SizedBox(width: 15),
         ],
       ),
-      body: weatherModel == null
-          ? const NoWeatherBody()
-          : WeatherInfoBody(
-              weatherModel: weatherModel!,
-            ),
+      body: BlocBuilder<GetWeatherCubit, WeatherState>(
+        builder: (context, state) {
+          if (state is InitialWeatherState) {
+            return const NoWeatherBody();
+          } else if (state is WeatherLoadedSuccessfullyState) {
+            return WeatherInfoBody(weatherModel: weatherModel!);
+          } else {
+            return const Text('Oops, there was an error');
+          }
+        },
+      ),
     );
   }
 }
