@@ -1,10 +1,11 @@
 class WeatherModel {
   final String cityName;
-  final String lastUpdatedTime;
+  final DateTime lastUpdatedTime;
   final String weatherState;
   final double currentTemperature;
   final double minTemperature;
   final double maxTemperature;
+  final int weatherCode;
 
   WeatherModel({
     required this.cityName,
@@ -13,6 +14,7 @@ class WeatherModel {
     required this.currentTemperature, // in Celsius
     required this.minTemperature, //  in Celsius
     required this.maxTemperature, //  in Celsius
+    required this.weatherCode, //we will use it to map weather image according to it
   });
 
   factory WeatherModel.fromJason({
@@ -22,8 +24,9 @@ class WeatherModel {
   }) {
     return WeatherModel(
       cityName: locationJson['name'],
-      lastUpdatedTime: currentJson['last_updated'],
+      lastUpdatedTime: DateTime.parse(currentJson['last_updated']),
       weatherState: forecastJson['forecastday'][0]['day']['condition']['text'],
+      weatherCode: forecastJson['forecastday'][0]['day']['condition']['code'],
       currentTemperature: currentJson['temp_c'],
       minTemperature: forecastJson['forecastday'][0]['day']['mintemp_c'],
       maxTemperature: forecastJson['forecastday'][0]['day']['maxtemp_c'],
