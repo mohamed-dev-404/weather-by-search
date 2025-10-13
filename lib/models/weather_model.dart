@@ -25,8 +25,8 @@ class WeatherModel {
     return WeatherModel(
       cityName: locationJson['name'],
       lastUpdatedTime: DateTime.parse(currentJson['last_updated']),
-      weatherState: forecastJson['forecastday'][0]['day']['condition']['text'],
-      weatherCode: forecastJson['forecastday'][0]['day']['condition']['code'],
+      weatherState: currentJson['condition']['text'],
+      weatherCode: currentJson['condition']['code'],
       currentTemperature: currentJson['temp_c'],
       minTemperature: forecastJson['forecastday'][0]['day']['mintemp_c'],
       maxTemperature: forecastJson['forecastday'][0]['day']['maxtemp_c'],
