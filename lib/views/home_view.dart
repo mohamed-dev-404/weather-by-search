@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_by_search/cubits/get_weather_cubit/get_weather_cubit.dart';
 import 'package:weather_by_search/cubits/get_weather_cubit/get_weather_states.dart';
+import 'package:weather_by_search/helper/weather_theme_mapper.dart';
 import 'package:weather_by_search/views/search_view.dart';
 import 'package:weather_by_search/widgets/custom_animated_loading.dart';
 import 'package:weather_by_search/widgets/custom_error_widget.dart';
@@ -13,18 +14,10 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: 65,
-        titleSpacing: 35,
         title: const Text(
           'Weather by search App',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
         ),
-        backgroundColor: Colors.blueAccent,
         actions: [
           IconButton(
             onPressed: () {
@@ -38,8 +31,6 @@ class HomeView extends StatelessWidget {
             },
             icon: const Icon(
               Icons.search_rounded,
-              color: Colors.white,
-              size: 35,
             ),
           ),
           const SizedBox(width: 15),
@@ -54,7 +45,13 @@ class HomeView extends StatelessWidget {
           } else if (state is WeatherFailureState) {
             return CustomErrorWidget(errMessage: state.errMessage);
           } else {
-            return const CustomAnimatedLoading();
+            return CustomAnimatedLoading(
+              color: getWeatherTheme(
+                weather: BlocProvider.of<GetWeatherCubit>(
+                  context,
+                ).weatherModel,
+              ),
+            );
           }
         },
       ),

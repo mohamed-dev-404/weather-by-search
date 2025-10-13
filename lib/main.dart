@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_by_search/cubits/get_weather_cubit/get_weather_cubit.dart';
+import 'package:weather_by_search/cubits/get_weather_cubit/get_weather_states.dart';
+import 'package:weather_by_search/helper/weather_theme_mapper.dart';
 import 'package:weather_by_search/views/home_view.dart';
 
 void main() {
@@ -14,9 +16,26 @@ class WeatherBySearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<GetWeatherCubit>(
       create: (context) => GetWeatherCubit(),
-      child: const MaterialApp(
-        home: HomeView(),
-        debugShowCheckedModeBanner: false,
+      child: Builder(
+        builder: (context) {
+          return BlocBuilder<GetWeatherCubit, WeatherState>(
+            builder: (context, state) {
+              return MaterialApp(
+                theme: ThemeData(
+                  useMaterial3: false,
+                  scaffoldBackgroundColor: Colors.white,
+                  primarySwatch: getWeatherTheme(
+                    weather: BlocProvider.of<GetWeatherCubit>(
+                      context,
+                    ).weatherModel,
+                  ),
+                ),
+                home: const HomeView(),
+                debugShowCheckedModeBanner: false,
+              );
+            },
+          );
+        },
       ),
     );
   }
